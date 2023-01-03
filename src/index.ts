@@ -1,24 +1,45 @@
-export function maxCalorie(list:(number | string)[]): number {
-    let bigNum: number = 0;
-    let smallNum: number = 0;
+export class ElfCalories {
+    bigNum: number;
+    smallNum: number;
+    constructor()
+    {
+        this.bigNum = 0;
+        this.smallNum = 0;
+    }
 
-    for (var num of list) {
-        if (Number.isInteger(num))
-        {
-            smallNum += Number(num);
-            
+    maxCalorie(list:(number | string)[]): number {
+        for (var num of list) {
+            num = Number(num);
+            this.update(num);
+        }
+        this.updateBigAndResetSmall();
+        return this.bigNum;
+    }
+    
+    update(num: number){
+        if (num == 0){ 
+            this.updateBigAndResetSmall();
         }
         else{
-            bigNum = updateBigNumber(bigNum, smallNum);
-            smallNum = 0;
+            this.updateSmallNumber(num);
         }
     }
 
-    bigNum = updateBigNumber(bigNum, smallNum);
-
-    return bigNum;
+    updateBigAndResetSmall() {
+        this.updateBigNumber();
+        this.resetSmallNumber();
+    }
+    
+    updateBigNumber() {
+        this.bigNum = Math.max(this.bigNum, this.smallNum);
+    }
+    
+    updateSmallNumber(num: number) {
+        this.smallNum += num;
+    }
+    
+    resetSmallNumber() {
+        this.smallNum = 0;
+    }
 }
 
-function updateBigNumber(bigNum: number, smallNum: number): number {
-    return Math.max(bigNum, smallNum);
-}
